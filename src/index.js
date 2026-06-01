@@ -20,6 +20,7 @@ const PAY_TO = process.env.PAY_TO_ADDRESS || '0x24FAcafEB49b4e3FACF0B3e69604A2F4
 const X402_NETWORK = process.env.X402_NETWORK || 'eip155:8453';
 const FACILITATOR_URL = process.env.FACILITATOR_URL || 'https://x402.org/facilitator';
 
+app.get('/openapi.json', (req, res) => res.sendFile(require('path').join(__dirname, 'openapi.json')));
 app.get('/health', (req, res) => res.json({ status: 'ok', service: 'agentflight', port: PORT }));
 app.get('/.well-known/oauth-protected-resource', (req, res) => {
   res.json({ resource: 'https://flight.memoryapi.org/mcp', authorization_servers: [], bearer_methods_supported: [], resource_documentation: 'https://memoryapi.org' });
