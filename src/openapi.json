@@ -33,7 +33,10 @@
             "description": "Departure or Arrival (default: Departure)",
             "schema": {
               "type": "string",
-              "enum": ["Departure", "Arrival"],
+              "enum": [
+                "Departure",
+                "Arrival"
+              ],
               "default": "Departure"
             }
           },
@@ -80,13 +83,27 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "flight_number": { "type": "string" },
-                          "airline": { "type": "string" },
-                          "destination": { "type": "string" },
-                          "scheduled_time": { "type": "string" },
-                          "status": { "type": "string" },
-                          "terminal": { "type": "string" },
-                          "gate": { "type": "string" }
+                          "flight_number": {
+                            "type": "string"
+                          },
+                          "airline": {
+                            "type": "string"
+                          },
+                          "destination": {
+                            "type": "string"
+                          },
+                          "scheduled_time": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "terminal": {
+                            "type": "string"
+                          },
+                          "gate": {
+                            "type": "string"
+                          }
                         }
                       }
                     },
@@ -146,8 +163,12 @@
                     "coordinates": {
                       "type": "object",
                       "properties": {
-                        "latitude": { "type": "number" },
-                        "longitude": { "type": "number" }
+                        "latitude": {
+                          "type": "number"
+                        },
+                        "longitude": {
+                          "type": "number"
+                        }
                       }
                     },
                     "source": {
