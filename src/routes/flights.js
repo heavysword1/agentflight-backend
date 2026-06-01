@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
     const { data } = await axios.get(url, config);
     
     // Map flights
-    const flights = (data || []).map(f => ({
+    const flights = (data.departures || data.arrivals || data || []).map(f => ({
       flight_number: f.number,
       airline: f.airline?.name,
       destination: f.movement?.airport?.iata,
@@ -89,3 +89,4 @@ router.get('/', async (req, res) => {
 });
 
 module.exports = router;
+// Note: response handled in router.get above
