@@ -1,0 +1,197 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AgentFlight API",
+    "description": "Real-time flight departures, arrivals, and airport information via AeroDataBox",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://flight.memoryapi.org",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/x402/flight/flights": {
+      "get": {
+        "summary": "Get flight departures or arrivals",
+        "description": "Real-time flight departures and arrivals from AeroDataBox. Get scheduled times, status, gate, terminal, and more.",
+        "x-price": "$0.005",
+        "parameters": [
+          {
+            "name": "airport",
+            "in": "query",
+            "description": "IATA airport code (default: JFK)",
+            "schema": {
+              "type": "string",
+              "default": "JFK"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "Departure or Arrival (default: Departure)",
+            "schema": {
+              "type": "string",
+              "enum": ["Departure", "Arrival"],
+              "default": "Departure"
+            }
+          },
+          {
+            "name": "hours",
+            "in": "query",
+            "description": "Look-ahead window in hours (1-12, default: 6)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12,
+              "default": 6
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Flight data retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "airport": {
+                      "type": "string"
+                    },
+                    "direction": {
+                      "type": "string"
+                    },
+                    "from_time": {
+                      "type": "string"
+                    },
+                    "to_time": {
+                      "type": "string"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "flights": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "flight_number": { "type": "string" },
+                          "airline": { "type": "string" },
+                          "destination": { "type": "string" },
+                          "scheduled_time": { "type": "string" },
+                          "status": { "type": "string" },
+                          "terminal": { "type": "string" },
+                          "gate": { "type": "string" }
+                        }
+                      }
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/x402/flight/airport": {
+      "get": {
+        "summary": "Get airport information",
+        "description": "Get airport information: name, city, country, timezone, and coordinates.",
+        "x-price": "$0.001",
+        "parameters": [
+          {
+            "name": "iata",
+            "in": "query",
+            "description": "IATA airport code (default: JFK)",
+            "schema": {
+              "type": "string",
+              "default": "JFK"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Airport information retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "iata": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "country": {
+                      "type": "string"
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "coordinates": {
+                      "type": "object",
+                      "properties": {
+                        "latitude": { "type": "number" },
+                        "longitude": { "type": "number" }
+                      }
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mcp": {
+      "get": {
+        "summary": "MCP server info",
+        "description": "Get MCP server information and available tools",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "MCP server info"
+          }
+        }
+      },
+      "post": {
+        "summary": "MCP tool call",
+        "description": "Call MCP tools for flight and airport data",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tool execution result"
+          }
+        }
+      }
+    }
+  }
+}
